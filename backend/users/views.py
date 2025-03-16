@@ -1,11 +1,22 @@
 from django.shortcuts import render
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.middleware.csrf import get_token
+
+
+# Vues pour rendre les pages HTML d'inscription et de connexion
+def afficher_inscription(request):
+    return render(request, 'inscription.html')
+
+
+def afficher_connexion(request):
+    return render(request, 'connexion.html')
+
+
+# Vues API pour l'inscription, la connexion, et la déconnexion
 
 @api_view(['POST'])
 def register_user(request):
@@ -25,6 +36,7 @@ def register_user(request):
     user = User.objects.create_user(username=username, password=password, email=email)
     return Response({'message': 'Utilisateur créé avec succès.'}, status=status.HTTP_201_CREATED)
 
+
 @api_view(['POST'])
 def login_user(request):
     """
@@ -41,6 +53,7 @@ def login_user(request):
     else:
         return Response({'error': 'Nom d\'utilisateur ou mot de passe incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def logout_user(request):
     """
@@ -48,6 +61,7 @@ def logout_user(request):
     """
     logout(request)
     return Response({'message': 'Déconnexion réussie.'}, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 def get_csrf_token(request):
