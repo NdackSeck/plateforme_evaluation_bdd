@@ -6,7 +6,6 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ici, vous pouvez ajouter la logique pour envoyer les données au backend
     console.log('Username:', username, 'Password:', password);
   };
 
